@@ -2,6 +2,9 @@
 
 #include "ofMain.h"
 #include "ofxFX.h"
+#include "ofxGaussianBlur.h"
+#include "ofxLUT.h"
+
 
 class ofApp : public ofBaseApp{
 
@@ -12,18 +15,16 @@ public:
 
     void keyPressed(int key);
     void keyReleased(int key);
-    void mouseMoved(int x, int y );
-    void mouseDragged(int x, int y, int button);
-    void mousePressed(int x, int y, int button);
-    void mouseReleased(int x, int y, int button);
-    void mouseEntered(int x, int y);
-    void mouseExited(int x, int y);
-    void windowResized(int w, int h);
-    void dragEvent(ofDragInfo dragInfo);
-    void gotMessage(ofMessage msg);
-		
+    ofVec3f randomPointOnSphere();
     ofxFXObject particleData;
     
-    //should
+    ofxSwapBuffer swapBuffer;
+    ofVboMesh particlePoints;
+    
+    ofEasyCam camera;
+    
+    
+    //should be square number.
     int numberOfParticles = 10000;
+    int maxParticleAge = 50;
 };

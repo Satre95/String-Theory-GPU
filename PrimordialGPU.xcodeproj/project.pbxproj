@@ -9,6 +9,86 @@
 		<string>46</string>
 		<key>objects</key>
 		<dict>
+			<key>40562A1AC8141EEAE8DE9FD6</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxGpuParticles.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxGpuParticles/src/ofxGpuParticles.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>0D69749DC16A63170FE23709</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>GpuParticles.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxGpuParticles/src/GpuParticles.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>8E0BD8273515037E0ACD60BC</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>F023988BFE9B8D4B44299A5E</string>
+					<string>0D69749DC16A63170FE23709</string>
+					<string>40562A1AC8141EEAE8DE9FD6</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>src</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>CF5521AF7BC4B7ECCA3F7EF2</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>8E0BD8273515037E0ACD60BC</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>ofxGpuParticles</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>900DDEDCFE3FAF10C3318D7C</key>
+			<dict>
+				<key>fileRef</key>
+				<string>F023988BFE9B8D4B44299A5E</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>F023988BFE9B8D4B44299A5E</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>GpuParticles.cpp</string>
+				<key>path</key>
+				<string>../../../addons/ofxGpuParticles/src/GpuParticles.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
 			<key>C31FEF62BD7316AF85A831B5</key>
 			<dict>
 				<key>explicitFileType</key>
@@ -1181,6 +1261,7 @@
 				<array>
 					<string>D8DD1043C333F6F63C8685E6</string>
 					<string>CABF1A23B637491112B10A00</string>
+					<string>CF5521AF7BC4B7ECCA3F7EF2</string>
 				</array>
 				<key>isa</key>
 				<string>PBXGroup</string>
@@ -1334,6 +1415,7 @@
 					<key>HEADER_SEARCH_PATHS</key>
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
+						<string>src</string>
 						<string>../../../addons/ofxDatGui/src</string>
 						<string>../../../addons/ofxDatGui/src/components</string>
 						<string>../../../addons/ofxDatGui/src/core</string>
@@ -1345,6 +1427,7 @@
 						<string>../../../addons/ofxFX/src/filters</string>
 						<string>../../../addons/ofxFX/src/generative</string>
 						<string>../../../addons/ofxFX/src/operations</string>
+						<string>../../../addons/ofxGpuParticles/src</string>
 					</array>
 					<key>CONFIGURATION_BUILD_DIR</key>
 					<string>$(SRCROOT)/bin/</string>
@@ -1402,6 +1485,7 @@
 					<key>HEADER_SEARCH_PATHS</key>
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
+						<string>src</string>
 						<string>../../../addons/ofxDatGui/src</string>
 						<string>../../../addons/ofxDatGui/src/components</string>
 						<string>../../../addons/ofxDatGui/src/core</string>
@@ -1413,6 +1497,7 @@
 						<string>../../../addons/ofxFX/src/filters</string>
 						<string>../../../addons/ofxFX/src/generative</string>
 						<string>../../../addons/ofxFX/src/operations</string>
+						<string>../../../addons/ofxGpuParticles/src</string>
 					</array>
 					<key>CONFIGURATION_BUILD_DIR</key>
 					<string>$(SRCROOT)/bin/</string>
@@ -1473,6 +1558,7 @@
 					<string>9CF4130A7E6DA19A3DC42B9A</string>
 					<string>C9466C434D1CF8AB968D298D</string>
 					<string>5355E99D8BBC71222AA2B9FD</string>
+					<string>900DDEDCFE3FAF10C3318D7C</string>
 				</array>
 				<key>isa</key>
 				<string>PBXSourcesBuildPhase</string>
@@ -1556,6 +1642,7 @@
 					<key>HEADER_SEARCH_PATHS</key>
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
+						<string>src</string>
 						<string>../../../addons/ofxDatGui/src</string>
 						<string>../../../addons/ofxDatGui/src/components</string>
 						<string>../../../addons/ofxDatGui/src/core</string>
@@ -1567,6 +1654,7 @@
 						<string>../../../addons/ofxFX/src/filters</string>
 						<string>../../../addons/ofxFX/src/generative</string>
 						<string>../../../addons/ofxFX/src/operations</string>
+						<string>../../../addons/ofxGpuParticles/src</string>
 					</array>
 					<key>COMBINE_HIDPI_IMAGES</key>
 					<string>YES</string>
@@ -1614,6 +1702,7 @@
 					<key>HEADER_SEARCH_PATHS</key>
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
+						<string>src</string>
 						<string>../../../addons/ofxDatGui/src</string>
 						<string>../../../addons/ofxDatGui/src/components</string>
 						<string>../../../addons/ofxDatGui/src/core</string>
@@ -1625,6 +1714,7 @@
 						<string>../../../addons/ofxFX/src/filters</string>
 						<string>../../../addons/ofxFX/src/generative</string>
 						<string>../../../addons/ofxFX/src/operations</string>
+						<string>../../../addons/ofxGpuParticles/src</string>
 					</array>
 					<key>COMBINE_HIDPI_IMAGES</key>
 					<string>YES</string>

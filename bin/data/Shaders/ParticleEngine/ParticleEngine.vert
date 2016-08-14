@@ -1,9 +1,15 @@
-#version 410 core
+#version 330 core
+
+uniform mat4 modelViewProjectionMatrix;
+uniform mat4 textureMatrix;
 
 in vec4 position;
+in vec2 texcoord;
 
-uniform mat4 MVP;
+out vec2 texCoordVarying;
 
-void main() {
-  gl_Position = MVP * position;
+void main(){
+    
+    texCoordVarying = texcoord;
+    gl_Position = modelViewProjectionMatrix * position;
 }
