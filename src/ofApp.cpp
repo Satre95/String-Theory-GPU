@@ -207,7 +207,7 @@ void ofApp::initParticleData(int agentsTexSize) {
     }
     
     //upload source data to ping-pong buffer source.
-    agentsPingPongBuffer.src->getTexture(0).loadData((float *)&particlePosAndAge[0].x, agentsTexSize, agentsTexSize, GL_RGBA32F);
+    agentsPingPongBuffer.src->getTexture(0).loadData((float *)&particlePosAndAge[0].x, agentsTexSize, agentsTexSize, GL_RGBA);
 }
 
 //--------------------------------------------------------------
@@ -215,7 +215,7 @@ void ofApp::initAttractorData( int attractorsTexSize) {
     //Init the particle positions and age.
     vector<ofVec4f> attractorsPosAndSpeed(numberOfAttractors);
     
-    attractorPoints.setMode(OF_PRIMITIVE_LINES);
+    attractorPoints.setMode(OF_PRIMITIVE_POINTS);
     
     int index = 0;
     for (int y = 0; y < attractorsTexSize; y++) {
@@ -261,7 +261,8 @@ void ofApp::updateCommonNoiseParams(ofShader & shader) {
 
 void ofApp::drawAttractorDebugData() {
     attractorsDrawShader.begin();
-    
+    attractorsDrawShader.setUniform1i("screenWidth", ofGetWidth());
+    attractorsDrawShader.setUniform1i("screenHeight", ofGetHeight());
     attractorsDrawShader.setUniformTexture("tex0", attractorsPingPongBuffer.src->getTexture(), 0);
     attractorsPingPongBuffer.src->draw(0,0, ofGetWidth(), ofGetHeight());
     
