@@ -5,8 +5,9 @@ uniform mat4 MVP;
 in vec4 position;
 in vec2 texcoord;
 
-out vec2 texCoordVarying;
+out vec2 sampleCoord;
+
 void main() {
-    texCoordVarying = texcoord
-    gl_Position = vec4(1.0f);
+    sampleCoord = texcoord;
+    gl_Position = MVP * position;
 }

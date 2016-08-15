@@ -1,12 +1,50 @@
 #version 400 core
 
 #pragma include "../Utils/ShaderHelpers.glslinc"
-#pragma include "../Utils/Noise3D.glslinc"
+#pragma include "../Utils/Noise2D.glslinc"
 
-uniform sampler2D attractorPos;
+//The source texture that has the attractor data from last frame.
+//vec4 holds position and speed
+uniform sampler2D attractorData;
 
-out vec4 newPosition;
+uniform float noiseScale;
+uniform float noiseStrength;
+uniform int screenWidth;
+uniform int screenHeight;
+uniform float maxSpeed;
+
+in vec2 sampleCoord;
+
+out vec4 newData;
+
+/** declare functions **/
+//Calculate the noise angle based off the current position.
+float noiseAngleFromPosition(vec2 position);
 
 void main() {
-    newPosition = vec4(1.0f, 0, 0, 1.0f);
+    vec4 posAndSpeed = texture(attractorData, sampleCoord);
+    float speed = posAndSpeed.a;
+    
+    vec2 position = vec2(posAndSpeed.x, posAndSpeed.y);
+    float angle = noiseAngleFromPosition(position);
+    
+    //Calc new position of attractor.
+    position.x += cos(angle) * speed;
+    position.y += sin(angle) * speed;
+    
+    //NOTE: For debugging, in order to see the values on screen, data values need to normalized, otherwise OpenGL will always clamp them.
+    //set new data
+    newData = vec4(0);
+    newData.r = position.x;
+    newData.g = position.y;
+    newData.b = speed;
+    newData.a = 1.0f;
 }
+
+
+float noiseAngleFromPosition(vec2 position) {
+    vec2 noisePosition = vec2(position.x / noiseScale, position.y / noiseScale);
+    
+    return snoise(noisePosition) * noiseStrength;
+}
+

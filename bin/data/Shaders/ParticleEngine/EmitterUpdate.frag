@@ -5,6 +5,8 @@
 
 uniform sampler2D emitterPos;
 
+in vec2 sampleCoord;
+
 out vec4 newPosition;
 
 void main() {
