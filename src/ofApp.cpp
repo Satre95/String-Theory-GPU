@@ -45,6 +45,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofBackground(0, 0, 0);
     drawAttractorDebugData();
 }
 
@@ -264,7 +265,10 @@ void ofApp::drawAttractorDebugData() {
     attractorsDrawShader.setUniform1i("screenWidth", ofGetWidth());
     attractorsDrawShader.setUniform1i("screenHeight", ofGetHeight());
     attractorsDrawShader.setUniformTexture("tex0", attractorsPingPongBuffer.src->getTexture(), 0);
-    attractorsPingPongBuffer.src->draw(0,0, ofGetWidth(), ofGetHeight());
+    attractorsDrawShader.setUniform1f("maxSpeed", maxAttractorSpeed);
+    
+//    attractorsPingPongBuffer.src->draw(0,0, ofGetWidth(), ofGetHeight());
+    attractorPoints.draw();
     
     attractorsDrawShader.end();
 }
