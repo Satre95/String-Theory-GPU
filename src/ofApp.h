@@ -13,13 +13,15 @@ public:
 
     void keyPressed(int key);
     void keyReleased(int key);
-    ofVec3f randomPointOnSphere();
     
     ofxSwapBuffer agentsPingPongBuffer;
     ofxSwapBuffer emittersPingPongBuffer;
     ofxSwapBuffer attractorsPingPongBuffer;
     
     ofVboMesh particlePoints;
+    ofVboMesh emitterPoints;
+    ofVboMesh attractorPoints;
+    
     ofShader agentUpdateShader, emittersUpdateShader, attractorsUpdateShader;
     ofShader drawShader;
     ofEasyCam camera;
@@ -30,8 +32,10 @@ public:
     int numberOfParticles = 10000;
     int numberOfAttractors = 100;
     int numberOfEmitters = 100;
+    int agentsTexSize, attractorsTexSize, emittersTexSize;
     
     int maxParticleAge = 50;
+    float maxAttractorSpeed = 2.7f;
     
 private:
     
@@ -40,8 +44,11 @@ private:
     void setupAttractorsPingPongBuffer(int attractorsTexSize);
     
     void initParticleData(int agentsTexSize);
+    void initAttractorData(int attractorsTexSize);
+    void initEmitterData( int emittersTexSize);
     
     void updateEmitters();
     void updateAttractors();
     void updateAgents();
+    void updateCommonNoiseParams(ofShader &);
 };

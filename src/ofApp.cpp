@@ -4,9 +4,11 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    int agentsTexSize = (int)sqrt(numberOfParticles);
-    int attractorsTexSize = (int)sqrt(numberOfAttractors);
-    int emittersTexSize = (int)sqrt(numberOfEmitters);
+    agentsTexSize = (int)sqrt(numberOfParticles);
+    attractorsTexSize = (int)sqrt(numberOfAttractors);
+    emittersTexSize = (int)sqrt(numberOfEmitters);
+    
+    ofDisableArbTex();
     
     //Setup the various ping pong buffers.
     setupAgentsPingPongBuffer(agentsTexSize);
@@ -20,8 +22,14 @@ void ofApp::setup(){
     
     drawShader.load("Shaders/ParticleEngine/ParticleDraw");
     
+    noiseScale = 533.0f;
+    noiseStrength = 77.0f;
+    
     //Init the particle positions and age.
     initParticleData(agentsTexSize);
+    initAttractorData(attractorsTexSize);
+    initEmitterData(emittersTexSize);
+//    camera.setDistance(500);
 }
 
 //--------------------------------------------------------------
@@ -33,13 +41,13 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    auto rect = ofRectangle(0, 0, ofGetWidth(), ofGetHeight());
-//    agentsPingPongBuffer.src->draw(rect);
+    camera.begin();
+        attractorsPingPongBuffer.src->draw(-attractorsTexSize/2, -attractorsTexSize/2);
+    camera.end();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
 }
 
 //--------------------------------------------------------------
@@ -47,6 +55,7 @@ void ofApp::keyReleased(int key){
 
 }
 
+//--------------------------------------------------------------
 void ofApp::updateEmitters() {
     //Disable blending so that data is written as is to FBO
     ofEnableBlendMode( OF_BLENDMODE_DISABLED );
@@ -57,9 +66,8 @@ void ofApp::updateEmitters() {
         emittersUpdateShader.begin();
         
             emittersUpdateShader.setUniformTexture("emittersPos", emittersPingPongBuffer.src->getTexture(0), 0);
-            emittersUpdateShader.setUniform1f("noiseScale", noiseScale);
-            emittersUpdateShader.setUniform1f("noiseStrength", noiseStrength);
-        
+            updateCommonNoiseParams(emittersUpdateShader);
+    
             emittersPingPongBuffer.src->draw(0,0);
     
         emittersUpdateShader.end();
@@ -69,6 +77,7 @@ void ofApp::updateEmitters() {
     emittersPingPongBuffer.swap();
 }
 
+//--------------------------------------------------------------
 void ofApp::updateAttractors() {
     //Disable blending so that data is written as is to FBO
     ofEnableBlendMode( OF_BLENDMODE_DISABLED );
@@ -79,9 +88,7 @@ void ofApp::updateAttractors() {
         attractorsUpdateShader.begin();
     
             attractorsUpdateShader.setUniformTexture("attractorPos", attractorsPingPongBuffer.src->getTexture(0), 0);
-            attractorsUpdateShader.setUniform1f("noiseScale", noiseScale);
-            attractorsUpdateShader.setUniform1f("noiseStrength", noiseStrength);
-    
+            updateCommonNoiseParams(attractorsUpdateShader);
     
             attractorsPingPongBuffer.src->draw(0,0);
     
@@ -92,6 +99,7 @@ void ofApp::updateAttractors() {
     attractorsPingPongBuffer.swap();
 }
 
+//--------------------------------------------------------------
 void ofApp::updateAgents() {
     //Disable blending so that data is written as is to FBO
     ofEnableBlendMode( OF_BLENDMODE_DISABLED );
@@ -115,6 +123,7 @@ void ofApp::updateAgents() {
     agentsPingPongBuffer.swap();
 }
 
+//--------------------------------------------------------------
 void ofApp::setupAttractorsPingPongBuffer(int attractorsTexSize) {
     //setup the ping-pong buffers.
     ofFbo::Settings settings;
@@ -131,6 +140,7 @@ void ofApp::setupAttractorsPingPongBuffer(int attractorsTexSize) {
     attractorsPingPongBuffer.allocate(settings);
 }
 
+//--------------------------------------------------------------
 void ofApp::setupEmittersPingPongBuffer( int emittersTexSize) {
     //setup the ping-pong buffers.
     ofFbo::Settings settings;
@@ -147,6 +157,7 @@ void ofApp::setupEmittersPingPongBuffer( int emittersTexSize) {
     emittersPingPongBuffer.allocate(settings);
 }
 
+//--------------------------------------------------------------
 void ofApp::setupAgentsPingPongBuffer(int agentsTexSize) {
     //setup the ping-pong buffers.
     ofFbo::Settings settings;
@@ -163,15 +174,16 @@ void ofApp::setupAgentsPingPongBuffer(int agentsTexSize) {
     agentsPingPongBuffer.allocate(settings);
 }
 
+//--------------------------------------------------------------
 void ofApp::initParticleData(int agentsTexSize) {
     //Init the particle positions and age.
     vector<ofVec4f> particlePosAndAge(numberOfParticles);
     int index = 0;
     for (int y = 0; y < agentsTexSize; y++) {
         for (int x = 0; x < agentsTexSize ; x++) {
-            ofVec3f randomPos = randomPointOnSphere() * ofRandom(5.0f);
+            ofVec2f randomPos(ofRandom(ofGetWidth()), ofRandom(ofGetHeight()));
             float randomAge = ofRandom(maxParticleAge);
-            particlePosAndAge[index] = ofVec4f(randomPos.x, randomPos.y, randomPos.z, randomAge);
+            particlePosAndAge[index] = ofVec4f(randomPos.x, randomPos.y, 0, randomAge);
             
             
             ofVec2f texCoord;
@@ -189,16 +201,50 @@ void ofApp::initParticleData(int agentsTexSize) {
     agentsPingPongBuffer.src->getTexture(0).loadData((float *)&particlePosAndAge[0].x, agentsTexSize, agentsTexSize, GL_RGBA32F);
 }
 
-ofVec3f ofApp::randomPointOnSphere()
-{
-    float lambda = ofRandom(1.0f);
-    float u = ofRandom(-1.0f, 1.0f);
-    float phi = ofRandom( 2.0 * PI );
+//--------------------------------------------------------------
+void ofApp::initAttractorData( int attractorsTexSize) {
+    //Init the particle positions and age.
+    vector<ofVec4f> attractorsPosAndSpeed(numberOfParticles);
     
-    ofVec3f p;
-    p.x = pow(lambda, 1/3) * sqrt(1.0 - u * u) * cos(phi);
-    p.y = pow(lambda, 1/3) * sqrt(1.0 - u * u) * sin(phi);
-    p.z = pow(lambda, 1/3) * u;
+    int index = 0;
+    for (int y = 0; y < attractorsTexSize; y++) {
+        for (int x = 0; x < attractorsTexSize ; x++) {
+            ofVec2f randomPos(ofRandom(ofGetWidth()), ofRandom(ofGetHeight()));
+            
+            float randomSpeed = ofRandom(maxAttractorSpeed);
+            attractorsPosAndSpeed[index] = ofVec4f(randomPos.x, randomPos.y, 0, randomSpeed);
+            
+            
+            ofVec2f texCoord;
+            texCoord.x = ofMap( x + 0.5f,	0, attractorsTexSize,	0.0f, 1.0f ); // the original source has a  '+ 0.5' in it, to get the ceil?
+            texCoord.y = ofMap( y + 0.5f,	0, attractorsTexSize,	0.0f, 1.0f );
+            emitterPoints.addTexCoord(texCoord);
+            emitterPoints.addVertex(randomPos);
+            
+            index++;
+        }
+        
+    }
     
-    return p;
+    //upload source data to ping-pong buffer source.
+    attractorsPingPongBuffer.src->getTexture(0).loadData((float *)&attractorsPosAndSpeed[0].x, attractorsTexSize, attractorsTexSize, GL_RGBA32F);
+}
+
+
+//--------------------------------------------------------------
+void ofApp::initEmitterData( int emitterTexSize) {
+    
+}
+
+//--------------------------------------------------------------
+/**
+ *  Updates the noise params for the given shader.
+ */
+void ofApp::updateCommonNoiseParams(ofShader & shader) {
+    
+    shader.setUniform1f("noiseStrength", noiseStrength);
+    shader.setUniform1f("noiseScale", noiseScale);
+    shader.setUniform1i("screenWidth", ofGetWidth());
+    shader.setUniform1i("screenHeight", ofGetHeight());
+    shader.setUniformMatrix4f("MVP", camera.getModelViewMatrix());
 }
