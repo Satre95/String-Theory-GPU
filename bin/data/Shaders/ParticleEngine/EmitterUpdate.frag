@@ -1,7 +1,7 @@
 #version 400 core
 
-#pragma include "../Utils/ShaderHelpers.glslinc"
-#pragma include "../Utils/Noise3D.glslinc"
+#pragma include "Shaders/Utils/ShaderHelpers.glslinc"
+#pragma include "Shaders/Utils/Noise3D.glslinc"
 
 uniform sampler2D emitterPos;
 
