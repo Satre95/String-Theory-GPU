@@ -32,7 +32,11 @@ void main() {
     position.x += cos(angle) * speed;
     position.y += sin(angle) * speed;
     
-    //NOTE: For debugging, in order to see the values on screen, data values need to normalized, otherwise OpenGL will always clamp them.
+    //Out of bounds check.
+    if (position.x > screenWidth || position.x < 0 || position.y > screenHeight || position.y < 0) {
+        position.xy = vec2(0);
+    }
+    
     //set new data
     newData = vec4(0);
     newData.r = position.x;
