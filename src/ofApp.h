@@ -14,6 +14,8 @@ public:
     void keyPressed(int key);
     void keyReleased(int key);
     
+    ofTrueTypeFont font;
+    
     ofxSwapBuffer agentsPingPongBuffer;
     ofxSwapBuffer emittersPingPongBuffer;
     ofxSwapBuffer attractorsPingPongBuffer;
@@ -29,7 +31,7 @@ public:
     
     //should be square number.
     int numberOfParticles = 10000;
-    int numberOfAttractors = 100;
+    int numberOfAttractors = 50000;
     int numberOfEmitters = 100;
     int agentsTexSize, attractorsTexSize, emittersTexSize;
     

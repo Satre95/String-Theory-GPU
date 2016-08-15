@@ -5,7 +5,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFrameRate(60);
-    
+    font.load("DIN.otf", 12);
     agentsTexSize = (int)sqrt(numberOfParticles);
     attractorsTexSize = (int)sqrt(numberOfAttractors);
     emittersTexSize = (int)sqrt(numberOfEmitters);
@@ -25,10 +25,8 @@ void ofApp::setup(){
     
 //    agentsDrawShader.load("Shaders/ParticleEngine/ParticleDraw");
     
-//    noiseScale = 533.0f;
-//    noiseStrength = 77.0f;
-    noiseScale = 1.0f;
-    noiseStrength = 1.0f;
+    noiseScale = 533.0f;
+    noiseStrength = 77.0f;
     
     //Init the particle positions and age.
     initParticleData(agentsTexSize);
@@ -47,6 +45,14 @@ void ofApp::update(){
 void ofApp::draw(){
     ofBackground(0, 0, 0);
     drawAttractorDebugData();
+    
+    //Draw the framrate.
+    ofSetColor(255, 255, 255);
+    string framerate = ofToString(ofGetFrameRate());
+    ofPushMatrix();
+    ofTranslate(0, ofGetHeight());
+    font.drawString("Framerate: " + framerate, 0, 0);
+    ofPopMatrix();
 }
 
 //--------------------------------------------------------------
@@ -223,7 +229,7 @@ void ofApp::initAttractorData( int attractorsTexSize) {
         for (int x = 0; x < attractorsTexSize ; x++) {
             ofVec2f randomPos(ofRandom(ofGetWidth()), ofRandom(ofGetHeight()));
             
-            float randomSpeed = maxAttractorSpeed;
+            float randomSpeed = ofRandom(maxAttractorSpeed);
             attractorsPosAndSpeed[index] = ofVec4f(randomPos.x, randomPos.y, 0, randomSpeed);
             
             
