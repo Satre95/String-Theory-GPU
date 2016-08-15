@@ -4,6 +4,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetFrameRate(60);
+    
     agentsTexSize = (int)sqrt(numberOfParticles);
     attractorsTexSize = (int)sqrt(numberOfAttractors);
     emittersTexSize = (int)sqrt(numberOfEmitters);
@@ -236,7 +238,7 @@ void ofApp::initAttractorData( int attractorsTexSize) {
     }
     
     //upload source data to ping-pong buffer source.
-    attractorsPingPongBuffer.src->getTexture(0).loadData((float *)&attractorsPosAndSpeed[0].x, attractorsTexSize, attractorsTexSize, GL_RGBA32F);
+    attractorsPingPongBuffer.src->getTexture(0).loadData((float *)&attractorsPosAndSpeed[0].x, attractorsTexSize, attractorsTexSize, GL_RGBA);
 }
 
 
@@ -255,16 +257,13 @@ void ofApp::updateCommonNoiseParams(ofShader & shader) {
     shader.setUniform1f("noiseScale", noiseScale);
     shader.setUniform1i("screenWidth", ofGetWidth());
     shader.setUniform1i("screenHeight", ofGetHeight());
-    
-//    shader.setUniformMatrix4f("MVP", camera.getModelViewProjectionMatrix());
-    
 }
 
 void ofApp::drawAttractorDebugData() {
     attractorsDrawShader.begin();
     
     attractorsDrawShader.setUniformTexture("tex0", attractorsPingPongBuffer.src->getTexture(), 0);
-    attractorPoints.draw();
+    attractorsPingPongBuffer.src->draw(0,0, ofGetWidth(), ofGetHeight());
     
     attractorsDrawShader.end();
 }

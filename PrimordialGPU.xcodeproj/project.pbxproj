@@ -317,16 +317,9 @@
 		965DFD561D6272030060CB0E /* ParticleEngine */ = {
 			isa = PBXGroup;
 			children = (
-				965DFD571D6272030060CB0E /* AttractorDraw.frag */,
-				965DFD581D6272030060CB0E /* AttractorDraw.vert */,
-				965DFD591D6272030060CB0E /* AttractorUpdate.frag */,
-				965DFD5A1D6272030060CB0E /* AttractorUpdate.vert */,
-				965DFD5B1D6272030060CB0E /* EmitterUpdate.frag */,
-				965DFD5C1D6272030060CB0E /* EmitterUpdate.vert */,
-				965DFD5D1D6272030060CB0E /* ParticleDraw.frag */,
-				965DFD5E1D6272030060CB0E /* ParticleDraw.vert */,
-				965DFD5F1D6272030060CB0E /* ParticleUpdate.frag */,
-				965DFD601D6272030060CB0E /* ParticleUpdate.vert */,
+				965DFD771D6277FE0060CB0E /* Attractor */,
+				965DFD781D6278040060CB0E /* Emitter */,
+				965DFD791D62780A0060CB0E /* Particle */,
 			);
 			path = ParticleEngine;
 			sourceTree = "<group>";
@@ -341,6 +334,37 @@
 				965DFD661D6272030060CB0E /* SimplexNoiseDerivatives4D.glslinc */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		965DFD771D6277FE0060CB0E /* Attractor */ = {
+			isa = PBXGroup;
+			children = (
+				965DFD571D6272030060CB0E /* AttractorDraw.frag */,
+				965DFD581D6272030060CB0E /* AttractorDraw.vert */,
+				965DFD591D6272030060CB0E /* AttractorUpdate.frag */,
+				965DFD5A1D6272030060CB0E /* AttractorUpdate.vert */,
+			);
+			name = Attractor;
+			sourceTree = "<group>";
+		};
+		965DFD781D6278040060CB0E /* Emitter */ = {
+			isa = PBXGroup;
+			children = (
+				965DFD5B1D6272030060CB0E /* EmitterUpdate.frag */,
+				965DFD5C1D6272030060CB0E /* EmitterUpdate.vert */,
+			);
+			name = Emitter;
+			sourceTree = "<group>";
+		};
+		965DFD791D62780A0060CB0E /* Particle */ = {
+			isa = PBXGroup;
+			children = (
+				965DFD5D1D6272030060CB0E /* ParticleDraw.frag */,
+				965DFD5E1D6272030060CB0E /* ParticleDraw.vert */,
+				965DFD5F1D6272030060CB0E /* ParticleUpdate.frag */,
+				965DFD601D6272030060CB0E /* ParticleUpdate.vert */,
+			);
+			name = Particle;
 			sourceTree = "<group>";
 		};
 		BB4B014C10F69532006C3DED /* addons */ = {
