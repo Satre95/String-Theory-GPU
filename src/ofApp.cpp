@@ -16,20 +16,22 @@ void ofApp::setup(){
     setupEmittersPingPongBuffer(emittersTexSize);
     
     //setup the shaders.
-    agentUpdateShader.load("Shaders/ParticleEngine/ParticleUpdate");
+//    agentUpdateShader.load("Shaders/ParticleEngine/ParticleUpdate");
     attractorsUpdateShader.load("Shaders/ParticleEngine/AttractorUpdate");
-    emittersUpdateShader.load("Shaders/ParticleEngine/EmitterUpdate");
+    attractorsDrawShader.load("Shaders/ParticleEngine/AttractorDraw");
+//    emittersUpdateShader.load("Shaders/ParticleEngine/EmitterUpdate");
     
-    drawShader.load("Shaders/ParticleEngine/ParticleDraw");
+//    agentsDrawShader.load("Shaders/ParticleEngine/ParticleDraw");
     
-    noiseScale = 533.0f;
-    noiseStrength = 77.0f;
+//    noiseScale = 533.0f;
+//    noiseStrength = 77.0f;
+    noiseScale = 1.0f;
+    noiseStrength = 1.0f;
     
     //Init the particle positions and age.
     initParticleData(agentsTexSize);
     initAttractorData(attractorsTexSize);
     initEmitterData(emittersTexSize);
-//    camera.setDistance(500);
 }
 
 //--------------------------------------------------------------
@@ -41,9 +43,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    camera.begin();
-        attractorsPingPongBuffer.src->draw(-attractorsTexSize/2, -attractorsTexSize/2);
-    camera.end();
+    drawAttractorDebugData();
 }
 
 //--------------------------------------------------------------
@@ -82,19 +82,23 @@ void ofApp::updateAttractors() {
     //Disable blending so that data is written as is to FBO
     ofEnableBlendMode( OF_BLENDMODE_DISABLED );
     
-    attractorsPingPongBuffer.dst->begin();
-        attractorsPingPongBuffer.dst->activateAllDrawBuffers();
+    ofFbo * src = attractorsPingPongBuffer.src;
+    ofFbo * dst = attractorsPingPongBuffer.dst;
+    
+    dst->begin();
+        dst->activateAllDrawBuffers();
     
         attractorsUpdateShader.begin();
     
-            attractorsUpdateShader.setUniformTexture("attractorPos", attractorsPingPongBuffer.src->getTexture(0), 0);
+            attractorsUpdateShader.setUniformTexture("attractorData", src->getTexture(), 0);
+            attractorsUpdateShader.setUniform1f("maxSpeed", maxAttractorSpeed);
             updateCommonNoiseParams(attractorsUpdateShader);
     
-            attractorsPingPongBuffer.src->draw(0,0);
+            src->draw(0,0);
     
         attractorsUpdateShader.end();
     
-    attractorsPingPongBuffer.dst->end();
+    dst->end();
     
     attractorsPingPongBuffer.swap();
 }
@@ -178,6 +182,9 @@ void ofApp::setupAgentsPingPongBuffer(int agentsTexSize) {
 void ofApp::initParticleData(int agentsTexSize) {
     //Init the particle positions and age.
     vector<ofVec4f> particlePosAndAge(numberOfParticles);
+    
+    particlePoints.setMode(OF_PRIMITIVE_POINTS);
+    
     int index = 0;
     for (int y = 0; y < agentsTexSize; y++) {
         for (int x = 0; x < agentsTexSize ; x++) {
@@ -204,22 +211,24 @@ void ofApp::initParticleData(int agentsTexSize) {
 //--------------------------------------------------------------
 void ofApp::initAttractorData( int attractorsTexSize) {
     //Init the particle positions and age.
-    vector<ofVec4f> attractorsPosAndSpeed(numberOfParticles);
+    vector<ofVec4f> attractorsPosAndSpeed(numberOfAttractors);
+    
+    attractorPoints.setMode(OF_PRIMITIVE_LINES);
     
     int index = 0;
     for (int y = 0; y < attractorsTexSize; y++) {
         for (int x = 0; x < attractorsTexSize ; x++) {
             ofVec2f randomPos(ofRandom(ofGetWidth()), ofRandom(ofGetHeight()));
             
-            float randomSpeed = ofRandom(maxAttractorSpeed);
+            float randomSpeed = maxAttractorSpeed;
             attractorsPosAndSpeed[index] = ofVec4f(randomPos.x, randomPos.y, 0, randomSpeed);
             
             
             ofVec2f texCoord;
             texCoord.x = ofMap( x + 0.5f,	0, attractorsTexSize,	0.0f, 1.0f ); // the original source has a  '+ 0.5' in it, to get the ceil?
             texCoord.y = ofMap( y + 0.5f,	0, attractorsTexSize,	0.0f, 1.0f );
-            emitterPoints.addTexCoord(texCoord);
-            emitterPoints.addVertex(randomPos);
+            attractorPoints.addTexCoord(texCoord);
+            attractorPoints.addVertex(randomPos);
             
             index++;
         }
@@ -246,5 +255,16 @@ void ofApp::updateCommonNoiseParams(ofShader & shader) {
     shader.setUniform1f("noiseScale", noiseScale);
     shader.setUniform1i("screenWidth", ofGetWidth());
     shader.setUniform1i("screenHeight", ofGetHeight());
-    shader.setUniformMatrix4f("MVP", camera.getModelViewMatrix());
+    
+//    shader.setUniformMatrix4f("MVP", camera.getModelViewProjectionMatrix());
+    
+}
+
+void ofApp::drawAttractorDebugData() {
+    attractorsDrawShader.begin();
+    
+    attractorsDrawShader.setUniformTexture("tex0", attractorsPingPongBuffer.src->getTexture(), 0);
+    attractorPoints.draw();
+    
+    attractorsDrawShader.end();
 }

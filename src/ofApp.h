@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxFX.h"
-
+#include "ofxAutoReloadedShader.h"
 
 class ofApp : public ofBaseApp{
 
@@ -22,9 +22,8 @@ public:
     ofVboMesh emitterPoints;
     ofVboMesh attractorPoints;
     
-    ofShader agentUpdateShader, emittersUpdateShader, attractorsUpdateShader;
-    ofShader drawShader;
-    ofEasyCam camera;
+    ofxAutoReloadedShader agentUpdateShader, emittersUpdateShader, attractorsUpdateShader;
+    ofxAutoReloadedShader attractorsDrawShader, emittersDrawShader, agentsDrawShader;
     
     float noiseScale, noiseStrength;
     
@@ -51,4 +50,6 @@ private:
     void updateAttractors();
     void updateAgents();
     void updateCommonNoiseParams(ofShader &);
+    
+    void drawAttractorDebugData();
 };

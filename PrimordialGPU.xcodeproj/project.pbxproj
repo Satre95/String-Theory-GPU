@@ -8,7 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		5355E99D8BBC71222AA2B9FD /* ofxFXObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CF06DA01D9A4561A5001B28 /* ofxFXObject.cpp */; };
+		622F2B6B3FFAA37224C22AD2 /* ofxAutoReloadedShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65E3959FF1F849DAE3BCC008 /* ofxAutoReloadedShader.cpp */; };
 		900DDEDCFE3FAF10C3318D7C /* GpuParticles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F023988BFE9B8D4B44299A5E /* GpuParticles.cpp */; };
+		965DFD711D6272200060CB0E /* Noise2D.glslinc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 965DFD621D6272030060CB0E /* Noise2D.glslinc */; };
+		965DFD721D6272200060CB0E /* Noise3D.glslinc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 965DFD631D6272030060CB0E /* Noise3D.glslinc */; };
+		965DFD731D6272200060CB0E /* Noise4D.glslinc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 965DFD641D6272030060CB0E /* Noise4D.glslinc */; };
+		965DFD741D6272200060CB0E /* ShaderHelpers.glslinc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 965DFD651D6272030060CB0E /* ShaderHelpers.glslinc */; };
+		965DFD751D6272200060CB0E /* SimplexNoiseDerivatives4D.glslinc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 965DFD661D6272030060CB0E /* SimplexNoiseDerivatives4D.glslinc */; };
 		9CF4130A7E6DA19A3DC42B9A /* ofxSmartFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C954E0E8B7DB9D6983309883 /* ofxSmartFont.cpp */; };
 		C9466C434D1CF8AB968D298D /* ofxDatGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26490D7CC31EF7D6ED5F925A /* ofxDatGui.cpp */; };
 		D3C1C48E59CAA2D68C0DD477 /* ofxDatGuiComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A3E3B8F332A1A3C7EDF4998 /* ofxDatGuiComponent.cpp */; };
@@ -38,9 +44,14 @@
 		E4C2427710CC5ABF004149E2 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstPath = Utils;
+			dstSubfolderSpec = 7;
 			files = (
+				965DFD711D6272200060CB0E /* Noise2D.glslinc in CopyFiles */,
+				965DFD721D6272200060CB0E /* Noise3D.glslinc in CopyFiles */,
+				965DFD731D6272200060CB0E /* Noise4D.glslinc in CopyFiles */,
+				965DFD741D6272200060CB0E /* ShaderHelpers.glslinc in CopyFiles */,
+				965DFD751D6272200060CB0E /* SimplexNoiseDerivatives4D.glslinc in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +84,7 @@
 		62BDB9F397D0AB08DD41E769 /* ofxGrayScott.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGrayScott.h; path = ../../../addons/ofxFX/src/generative/ofxGrayScott.h; sourceTree = SOURCE_ROOT; };
 		63CD29B9755446A11D1068B5 /* ofxMask.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxMask.h; path = ../../../addons/ofxFX/src/composers/ofxMask.h; sourceTree = SOURCE_ROOT; };
 		64C563B8158C37E9D07AE29D /* ofxDatGuiFRM.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDatGuiFRM.h; path = ../../../addons/ofxDatGui/src/components/ofxDatGuiFRM.h; sourceTree = SOURCE_ROOT; };
+		65E3959FF1F849DAE3BCC008 /* ofxAutoReloadedShader.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxAutoReloadedShader.cpp; path = ../../../addons/ofxAutoReloadedShader/src/ofxAutoReloadedShader.cpp; sourceTree = SOURCE_ROOT; };
 		6C3BF497C4422FA343F951A2 /* ofxMedian.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxMedian.h; path = ../../../addons/ofxFX/src/filters/ofxMedian.h; sourceTree = SOURCE_ROOT; };
 		744031A3E8F8DAF9FE6F3EA8 /* ofxDatGuiGroups.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDatGuiGroups.h; path = ../../../addons/ofxDatGui/src/components/ofxDatGuiGroups.h; sourceTree = SOURCE_ROOT; };
 		782D44F4D5E4C1FD710C3716 /* ofxRipples.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxRipples.h; path = ../../../addons/ofxFX/src/operations/ofxRipples.h; sourceTree = SOURCE_ROOT; };
@@ -87,19 +99,21 @@
 		8EB521E333C7B0CE4CF802B3 /* ofxFire.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxFire.h; path = ../../../addons/ofxFX/src/generative/ofxFire.h; sourceTree = SOURCE_ROOT; };
 		902724601B82C6AD81BBCD71 /* ofxDatGui2dPad.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDatGui2dPad.h; path = ../../../addons/ofxDatGui/src/components/ofxDatGui2dPad.h; sourceTree = SOURCE_ROOT; };
 		92696C363FF18AA6DFAAD969 /* ofxChromaAb.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxChromaAb.h; path = ../../../addons/ofxFX/src/filters/ofxChromaAb.h; sourceTree = SOURCE_ROOT; };
-		96C233BC1D6022C900F5C82C /* ParticleUpdate.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleUpdate.frag; sourceTree = "<group>"; };
-		96C233BD1D6022C900F5C82C /* ParticleUpdate.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleUpdate.vert; sourceTree = "<group>"; };
-		96C233BF1D6022C900F5C82C /* Noise2D.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Noise2D.glslinc; sourceTree = "<group>"; };
-		96C233C01D6022C900F5C82C /* Noise3D.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Noise3D.glslinc; sourceTree = "<group>"; };
-		96C233C11D6022C900F5C82C /* Noise4D.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Noise4D.glslinc; sourceTree = "<group>"; };
-		96C233C21D6022C900F5C82C /* ShaderHelpers.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ShaderHelpers.glslinc; sourceTree = "<group>"; };
-		96C233C31D6022C900F5C82C /* SimplexNoiseDerivatives4D.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimplexNoiseDerivatives4D.glslinc; sourceTree = "<group>"; };
-		96C233DC1D60FEDB00F5C82C /* ParticleDraw.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleDraw.vert; sourceTree = "<group>"; };
-		96C233DD1D60FEE300F5C82C /* ParticleDraw.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleDraw.frag; sourceTree = "<group>"; };
-		96C233DE1D611B7F00F5C82C /* AttractorUpdate.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = AttractorUpdate.frag; sourceTree = "<group>"; };
-		96C233DF1D611B8900F5C82C /* AttractorUpdate.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = AttractorUpdate.vert; sourceTree = "<group>"; };
-		96C233E01D611B9A00F5C82C /* EmitterUpdate.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = EmitterUpdate.vert; sourceTree = "<group>"; };
-		96C233E11D611BA000F5C82C /* EmitterUpdate.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = EmitterUpdate.frag; sourceTree = "<group>"; };
+		965DFD571D6272030060CB0E /* AttractorDraw.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = AttractorDraw.frag; sourceTree = "<group>"; };
+		965DFD581D6272030060CB0E /* AttractorDraw.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = AttractorDraw.vert; sourceTree = "<group>"; };
+		965DFD591D6272030060CB0E /* AttractorUpdate.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = AttractorUpdate.frag; sourceTree = "<group>"; };
+		965DFD5A1D6272030060CB0E /* AttractorUpdate.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = AttractorUpdate.vert; sourceTree = "<group>"; };
+		965DFD5B1D6272030060CB0E /* EmitterUpdate.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = EmitterUpdate.frag; sourceTree = "<group>"; };
+		965DFD5C1D6272030060CB0E /* EmitterUpdate.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = EmitterUpdate.vert; sourceTree = "<group>"; };
+		965DFD5D1D6272030060CB0E /* ParticleDraw.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleDraw.frag; sourceTree = "<group>"; };
+		965DFD5E1D6272030060CB0E /* ParticleDraw.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleDraw.vert; sourceTree = "<group>"; };
+		965DFD5F1D6272030060CB0E /* ParticleUpdate.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleUpdate.frag; sourceTree = "<group>"; };
+		965DFD601D6272030060CB0E /* ParticleUpdate.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ParticleUpdate.vert; sourceTree = "<group>"; };
+		965DFD621D6272030060CB0E /* Noise2D.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Noise2D.glslinc; sourceTree = "<group>"; };
+		965DFD631D6272030060CB0E /* Noise3D.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Noise3D.glslinc; sourceTree = "<group>"; };
+		965DFD641D6272030060CB0E /* Noise4D.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Noise4D.glslinc; sourceTree = "<group>"; };
+		965DFD651D6272030060CB0E /* ShaderHelpers.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ShaderHelpers.glslinc; sourceTree = "<group>"; };
+		965DFD661D6272030060CB0E /* SimplexNoiseDerivatives4D.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimplexNoiseDerivatives4D.glslinc; sourceTree = "<group>"; };
 		9705D66270ED89ECA6E6FECE /* ofxDatGui.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDatGui.h; path = ../../../addons/ofxDatGui/src/ofxDatGui.h; sourceTree = SOURCE_ROOT; };
 		987AD08F097CB59F432D3C8A /* ofxGlow.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGlow.h; path = ../../../addons/ofxFX/src/filters/ofxGlow.h; sourceTree = SOURCE_ROOT; };
 		9B5051062C6A871714E6F5F4 /* ofxDatGuiConstants.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDatGuiConstants.h; path = ../../../addons/ofxDatGui/src/core/ofxDatGuiConstants.h; sourceTree = SOURCE_ROOT; };
@@ -126,6 +140,7 @@
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
 		F023988BFE9B8D4B44299A5E /* GpuParticles.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = GpuParticles.cpp; path = ../../../addons/ofxGpuParticles/src/GpuParticles.cpp; sourceTree = SOURCE_ROOT; };
+		F3CFD94F37ABC9182A320B79 /* ofxAutoReloadedShader.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxAutoReloadedShader.h; path = ../../../addons/ofxAutoReloadedShader/src/ofxAutoReloadedShader.h; sourceTree = SOURCE_ROOT; };
 		F56A0242CA8F5409C606405E /* ofxFBM.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxFBM.h; path = ../../../addons/ofxFX/src/generative/ofxFBM.h; sourceTree = SOURCE_ROOT; };
 		F59384ED57A7C6A7A8B0351D /* ofxDatGuiEvents.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDatGuiEvents.h; path = ../../../addons/ofxDatGui/src/core/ofxDatGuiEvents.h; sourceTree = SOURCE_ROOT; };
 		F5E48C748F236B06C3FD6352 /* ofxAbsDiff.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxAbsDiff.h; path = ../../../addons/ofxFX/src/operations/ofxAbsDiff.h; sourceTree = SOURCE_ROOT; };
@@ -152,6 +167,15 @@
 				896211FFD7650884437CE42C /* ofxSmartFont.h */,
 			);
 			name = ofxSmartFont;
+			sourceTree = "<group>";
+		};
+		348096EAEFAC358FDD5E584A /* src */ = {
+			isa = PBXGroup;
+			children = (
+				65E3959FF1F849DAE3BCC008 /* ofxAutoReloadedShader.cpp */,
+				F3CFD94F37ABC9182A320B79 /* ofxAutoReloadedShader.h */,
+			);
+			name = src;
 			sourceTree = "<group>";
 		};
 		37EEAF5BE699F2C7DD676270 /* src */ = {
@@ -188,6 +212,14 @@
 				5E5EAD88DF0323D1C6109408 /* ofxOldTv.h */,
 			);
 			name = filters;
+			sourceTree = "<group>";
+		};
+		38A85F4B8B6D987F0B0390B2 /* ofxAutoReloadedShader */ = {
+			isa = PBXGroup;
+			children = (
+				348096EAEFAC358FDD5E584A /* src */,
+			);
+			name = ofxAutoReloadedShader;
 			sourceTree = "<group>";
 		};
 		44AC956B7DDEB3EA3AA33B00 /* operations */ = {
@@ -272,39 +304,41 @@
 			name = components;
 			sourceTree = "<group>";
 		};
-		96C233BA1D6022C900F5C82C /* Shaders */ = {
+		965DFD551D6272030060CB0E /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				96C233BB1D6022C900F5C82C /* ParticleEngine */,
-				96C233BE1D6022C900F5C82C /* Utils */,
+				965DFD561D6272030060CB0E /* ParticleEngine */,
+				965DFD611D6272030060CB0E /* Utils */,
 			);
 			name = Shaders;
 			path = bin/data/Shaders;
 			sourceTree = "<group>";
 		};
-		96C233BB1D6022C900F5C82C /* ParticleEngine */ = {
+		965DFD561D6272030060CB0E /* ParticleEngine */ = {
 			isa = PBXGroup;
 			children = (
-				96C233BD1D6022C900F5C82C /* ParticleUpdate.vert */,
-				96C233BC1D6022C900F5C82C /* ParticleUpdate.frag */,
-				96C233DC1D60FEDB00F5C82C /* ParticleDraw.vert */,
-				96C233DD1D60FEE300F5C82C /* ParticleDraw.frag */,
-				96C233DF1D611B8900F5C82C /* AttractorUpdate.vert */,
-				96C233DE1D611B7F00F5C82C /* AttractorUpdate.frag */,
-				96C233E01D611B9A00F5C82C /* EmitterUpdate.vert */,
-				96C233E11D611BA000F5C82C /* EmitterUpdate.frag */,
+				965DFD571D6272030060CB0E /* AttractorDraw.frag */,
+				965DFD581D6272030060CB0E /* AttractorDraw.vert */,
+				965DFD591D6272030060CB0E /* AttractorUpdate.frag */,
+				965DFD5A1D6272030060CB0E /* AttractorUpdate.vert */,
+				965DFD5B1D6272030060CB0E /* EmitterUpdate.frag */,
+				965DFD5C1D6272030060CB0E /* EmitterUpdate.vert */,
+				965DFD5D1D6272030060CB0E /* ParticleDraw.frag */,
+				965DFD5E1D6272030060CB0E /* ParticleDraw.vert */,
+				965DFD5F1D6272030060CB0E /* ParticleUpdate.frag */,
+				965DFD601D6272030060CB0E /* ParticleUpdate.vert */,
 			);
 			path = ParticleEngine;
 			sourceTree = "<group>";
 		};
-		96C233BE1D6022C900F5C82C /* Utils */ = {
+		965DFD611D6272030060CB0E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				96C233BF1D6022C900F5C82C /* Noise2D.glslinc */,
-				96C233C01D6022C900F5C82C /* Noise3D.glslinc */,
-				96C233C11D6022C900F5C82C /* Noise4D.glslinc */,
-				96C233C21D6022C900F5C82C /* ShaderHelpers.glslinc */,
-				96C233C31D6022C900F5C82C /* SimplexNoiseDerivatives4D.glslinc */,
+				965DFD621D6272030060CB0E /* Noise2D.glslinc */,
+				965DFD631D6272030060CB0E /* Noise3D.glslinc */,
+				965DFD641D6272030060CB0E /* Noise4D.glslinc */,
+				965DFD651D6272030060CB0E /* ShaderHelpers.glslinc */,
+				965DFD661D6272030060CB0E /* SimplexNoiseDerivatives4D.glslinc */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -312,6 +346,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				38A85F4B8B6D987F0B0390B2 /* ofxAutoReloadedShader */,
 				D8DD1043C333F6F63C8685E6 /* ofxDatGui */,
 				CABF1A23B637491112B10A00 /* ofxFX */,
 				CF5521AF7BC4B7ECCA3F7EF2 /* ofxGpuParticles */,
@@ -366,9 +401,9 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
+				965DFD551D6272030060CB0E /* Shaders */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
-				96C233BA1D6022C900F5C82C /* Shaders */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
@@ -448,7 +483,7 @@
 		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0600;
 			};
 			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "PrimordialGPU" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -509,6 +544,7 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
+				622F2B6B3FFAA37224C22AD2 /* ofxAutoReloadedShader.cpp in Sources */,
 				D3C1C48E59CAA2D68C0DD477 /* ofxDatGuiComponent.cpp in Sources */,
 				9CF4130A7E6DA19A3DC42B9A /* ofxSmartFont.cpp in Sources */,
 				C9466C434D1CF8AB968D298D /* ofxDatGui.cpp in Sources */,
@@ -535,7 +571,6 @@
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
-				ENABLE_TESTABILITY = YES;
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
@@ -551,6 +586,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,
+					../../../addons/ofxAutoReloadedShader/src,
 					../../../addons/ofxDatGui/src,
 					../../../addons/ofxDatGui/src/components,
 					../../../addons/ofxDatGui/src/core,
@@ -597,6 +633,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,
+					../../../addons/ofxAutoReloadedShader/src,
 					../../../addons/ofxDatGui/src,
 					../../../addons/ofxDatGui/src/components,
 					../../../addons/ofxDatGui/src/core,
@@ -636,6 +673,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,
+					../../../addons/ofxAutoReloadedShader/src,
 					../../../addons/ofxDatGui/src,
 					../../../addons/ofxDatGui/src/components,
 					../../../addons/ofxDatGui/src/core,
@@ -654,7 +692,6 @@
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = /Applications;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = cc.openFrameworks.ofapp;
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
 				WRAPPER_EXTENSION = app;
 			};
@@ -676,6 +713,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,
+					../../../addons/ofxAutoReloadedShader/src,
 					../../../addons/ofxDatGui/src,
 					../../../addons/ofxDatGui/src/components,
 					../../../addons/ofxDatGui/src/core,
@@ -694,7 +732,6 @@
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = /Applications;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = cc.openFrameworks.ofapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
