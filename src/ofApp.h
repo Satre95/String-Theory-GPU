@@ -15,7 +15,6 @@ public:
     void keyPressed(int key);
     void keyReleased(int key);
     
-    ofTrueTypeFont font;
     ofxDatGui * gui;
     ofxDatGuiSlider * noiseStrengthSlider;
     ofxDatGuiSlider * noiseScaleSlider;
@@ -32,6 +31,8 @@ public:
     ofxAutoReloadedShader agentUpdateShader, emittersUpdateShader, attractorsUpdateShader;
     ofxAutoReloadedShader attractorsDrawShader, emittersDrawShader, agentsDrawShader;
     
+    ofEasyCam camera;
+    
     float noiseScale, noiseStrength;
     
     //should be square number.
@@ -42,6 +43,7 @@ public:
     
     int maxParticleAge = 50;
     float maxAttractorSpeed = 2.7f;
+    int screenDepth;
     
     void noiseChanged(ofxDatGuiSliderEvent slider);
     

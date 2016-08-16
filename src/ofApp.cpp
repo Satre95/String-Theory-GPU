@@ -5,8 +5,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFrameRate(60);
-    
-    font.load("DIN.otf", 12);
+    screenDepth = ofGetHeight() / 2;
     agentsTexSize = (int)sqrt(numberOfParticles);
     attractorsTexSize = (int)sqrt(numberOfAttractors);
     emittersTexSize = (int)sqrt(numberOfEmitters);
@@ -20,11 +19,13 @@ void ofApp::setup(){
     
     //setup the shaders.
 //    agentUpdateShader.load("Shaders/ParticleEngine/ParticleUpdate");
+//    agentsDrawShader.load("Shaders/ParticleEngine/ParticleDraw");
     attractorsUpdateShader.load("Shaders/ParticleEngine/AttractorUpdate");
     attractorsDrawShader.load("Shaders/ParticleEngine/AttractorDraw");
-//    emittersUpdateShader.load("Shaders/ParticleEngine/EmitterUpdate");
+    emittersUpdateShader.load("Shaders/ParticleEngine/EmitterUpdate");
+    emittersDrawShader.load("Shaders/ParticleEngine/EmitterDraw");
     
-//    agentsDrawShader.load("Shaders/ParticleEngine/ParticleDraw");
+
     
     noiseScale = 533.0f;
     noiseStrength = 77.0f;
@@ -42,10 +43,12 @@ void ofApp::setup(){
     noiseScaleSlider = gui->addSlider("Noise Scale", 1, 1000, noiseScale);
     
     framerateLabel =  gui->addLabel("Framerate: ");
-    
     gui->setTheme(new ofxDatGuiThemeWireframe());
-    
     gui->onSliderEvent(this, &ofApp::noiseChanged);
+    
+    //setup the camera
+    camera.setDistance(200);
+    camera.enableMouseInput();
     
 }
 
@@ -61,7 +64,10 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground(0, 0, 0);
-    drawAttractorDebugData();
+    camera.begin();
+        ofTranslate(-ofGetWidth() / 2, -ofGetHeight() / 2);
+        drawAttractorDebugData();
+    camera.end();
     
     gui->draw();
 }
@@ -243,10 +249,11 @@ void ofApp::initAttractorData( int attractorsTexSize) {
     int index = 0;
     for (int y = 0; y < attractorsTexSize; y++) {
         for (int x = 0; x < attractorsTexSize ; x++) {
-            ofVec2f randomPos(ofRandom(ofGetWidth()), ofRandom(ofGetHeight()));
+            //Use the height as a depth value as well.
+            ofVec3f randomPos(ofRandom(ofGetWidth()), ofRandom(ofGetHeight()), ofRandom(screenDepth));
             
             float randomSpeed = ofRandom(maxAttractorSpeed);
-            attractorsPosAndSpeed[index] = ofVec4f(randomPos.x, randomPos.y, 0, randomSpeed);
+            attractorsPosAndSpeed[index] = ofVec4f(randomPos.x, randomPos.y, randomPos.z, randomSpeed);
             
             
             ofVec2f texCoord;
@@ -280,12 +287,15 @@ void ofApp::updateCommonNoiseParams(ofShader & shader) {
     shader.setUniform1f("noiseScale", noiseScale);
     shader.setUniform1i("screenWidth", ofGetWidth());
     shader.setUniform1i("screenHeight", ofGetHeight());
+    shader.setUniform1i("screenDepth", screenDepth);
 }
 
 void ofApp::drawAttractorDebugData() {
     attractorsDrawShader.begin();
     attractorsDrawShader.setUniform1i("screenWidth", ofGetWidth());
     attractorsDrawShader.setUniform1i("screenHeight", ofGetHeight());
+    attractorsDrawShader.setUniform1i("screenDepth", screenDepth);
+    
     attractorsDrawShader.setUniformTexture("tex0", attractorsPingPongBuffer.src->getTexture(), 0);
     attractorsDrawShader.setUniform1f("maxSpeed", maxAttractorSpeed);
     
