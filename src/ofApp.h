@@ -19,6 +19,7 @@ public:
     ofxDatGui * gui;
     ofxDatGuiSlider * noiseStrengthSlider;
     ofxDatGuiSlider * noiseScaleSlider;
+    ofxDatGuiLabel * framerateLabel;
     
     ofxSwapBuffer agentsPingPongBuffer;
     ofxSwapBuffer emittersPingPongBuffer;

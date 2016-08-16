@@ -41,6 +41,10 @@ void ofApp::setup(){
     noiseStrengthSlider = gui->addSlider("Noise Strength", 1, 200, noiseStrength);
     noiseScaleSlider = gui->addSlider("Noise Scale", 1, 1000, noiseScale);
     
+    framerateLabel =  gui->addLabel("Framerate: ");
+    
+    gui->setTheme(new ofxDatGuiThemeWireframe());
+    
     gui->onSliderEvent(this, &ofApp::noiseChanged);
     
 }
@@ -50,20 +54,14 @@ void ofApp::update(){
     updateEmitters();
     updateAttractors();
     updateAgents();
+    
+    framerateLabel->setLabel("Framerate: " + ofToString(ofGetFrameRate()));
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground(0, 0, 0);
     drawAttractorDebugData();
-    
-    //Draw the framrate.
-    ofSetColor(255, 255, 255);
-    string framerate = ofToString(ofGetFrameRate());
-    ofPushMatrix();
-    ofTranslate(0, ofGetHeight());
-    font.drawString("Framerate: " + framerate, 0, 0);
-    ofPopMatrix();
     
     gui->draw();
 }
@@ -72,6 +70,8 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     if( key == 'f') {
         ofToggleFullscreen();
+    } else if( key == 'g') {
+        gui->setVisible(!gui->getVisible());
     }
 }
 
