@@ -31,7 +31,7 @@ public:
     
     //should be square number.
     int numberOfParticles = 10000;
-    int numberOfAttractors = 50000;
+    int numberOfAttractors = 800000;
     int numberOfEmitters = 100;
     int agentsTexSize, attractorsTexSize, emittersTexSize;
     
