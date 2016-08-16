@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxFX.h"
 #include "ofxAutoReloadedShader.h"
+#include "ofxDatGui.h"
 
 class ofApp : public ofBaseApp{
 
@@ -15,6 +16,9 @@ public:
     void keyReleased(int key);
     
     ofTrueTypeFont font;
+    ofxDatGui * gui;
+    ofxDatGuiSlider * noiseStrengthSlider;
+    ofxDatGuiSlider * noiseScaleSlider;
     
     ofxSwapBuffer agentsPingPongBuffer;
     ofxSwapBuffer emittersPingPongBuffer;
@@ -37,6 +41,8 @@ public:
     
     int maxParticleAge = 50;
     float maxAttractorSpeed = 2.7f;
+    
+    void noiseChanged(ofxDatGuiSliderEvent slider);
     
 private:
     

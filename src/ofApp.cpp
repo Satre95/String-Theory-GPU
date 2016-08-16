@@ -5,6 +5,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFrameRate(60);
+    
     font.load("DIN.otf", 12);
     agentsTexSize = (int)sqrt(numberOfParticles);
     attractorsTexSize = (int)sqrt(numberOfAttractors);
@@ -32,6 +33,16 @@ void ofApp::setup(){
     initParticleData(agentsTexSize);
     initAttractorData(attractorsTexSize);
     initEmitterData(emittersTexSize);
+    
+    //Setup the GUI
+    ofxDatGui::setAssetPath("/Users/satre/Developer/OF/addons/ofxDatGui/");
+    gui = new ofxDatGui(ofxDatGuiAnchor::TOP_LEFT);
+    
+    noiseStrengthSlider = gui->addSlider("Noise Strength", 1, 200, noiseStrength);
+    noiseScaleSlider = gui->addSlider("Noise Scale", 1, 1000, noiseScale);
+    
+    gui->onSliderEvent(this, &ofApp::noiseChanged);
+    
 }
 
 //--------------------------------------------------------------
@@ -53,6 +64,8 @@ void ofApp::draw(){
     ofTranslate(0, ofGetHeight());
     font.drawString("Framerate: " + framerate, 0, 0);
     ofPopMatrix();
+    
+    gui->draw();
 }
 
 //--------------------------------------------------------------
@@ -280,4 +293,12 @@ void ofApp::drawAttractorDebugData() {
     attractorPoints.draw();
     
     attractorsDrawShader.end();
+}
+
+void ofApp::noiseChanged( ofxDatGuiSliderEvent e) {
+    if( e.target == noiseStrengthSlider) {
+        noiseStrength = e.value;
+    } else if( e.target == noiseScaleSlider) {
+        noiseScale = e.value;
+    }
 }
