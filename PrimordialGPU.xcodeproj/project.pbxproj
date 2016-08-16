@@ -114,6 +114,8 @@
 		965DFD641D6272030060CB0E /* Noise4D.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Noise4D.glslinc; sourceTree = "<group>"; };
 		965DFD651D6272030060CB0E /* ShaderHelpers.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ShaderHelpers.glslinc; sourceTree = "<group>"; };
 		965DFD661D6272030060CB0E /* SimplexNoiseDerivatives4D.glslinc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimplexNoiseDerivatives4D.glslinc; sourceTree = "<group>"; };
+		96B150721D63B1E800EC1E93 /* EmitterDraw.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = EmitterDraw.vert; sourceTree = "<group>"; };
+		96B150731D63B1F100EC1E93 /* EmitterDraw.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = EmitterDraw.frag; sourceTree = "<group>"; };
 		9705D66270ED89ECA6E6FECE /* ofxDatGui.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDatGui.h; path = ../../../addons/ofxDatGui/src/ofxDatGui.h; sourceTree = SOURCE_ROOT; };
 		987AD08F097CB59F432D3C8A /* ofxGlow.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGlow.h; path = ../../../addons/ofxFX/src/filters/ofxGlow.h; sourceTree = SOURCE_ROOT; };
 		9B5051062C6A871714E6F5F4 /* ofxDatGuiConstants.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxDatGuiConstants.h; path = ../../../addons/ofxDatGui/src/core/ofxDatGuiConstants.h; sourceTree = SOURCE_ROOT; };
@@ -352,6 +354,8 @@
 			children = (
 				965DFD5B1D6272030060CB0E /* EmitterUpdate.frag */,
 				965DFD5C1D6272030060CB0E /* EmitterUpdate.vert */,
+				96B150731D63B1F100EC1E93 /* EmitterDraw.frag */,
+				96B150721D63B1E800EC1E93 /* EmitterDraw.vert */,
 			);
 			name = Emitter;
 			sourceTree = "<group>";
