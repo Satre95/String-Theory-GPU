@@ -5,6 +5,7 @@
 uniform sampler2D tex0;
 uniform int screenWidth;
 uniform int screenHeight;
+uniform int screenDepth;
 uniform float maxSpeed;
 
 in vec2 sampleCoord;
@@ -16,7 +17,7 @@ void main() {
     
     float r = map(data.x, 0, screenWidth, 0, 1.0f);
     float g = map(data.y, 0, screenHeight, 0, 1.0f);
-    float b = data.b;
+    float b = map(data.z, 0, screenDepth, 0, 1.0f);
     float a = map(data.a, 0, maxSpeed, 0, 1.0f);
     
     fragColor = vec4(r, g, b, a);
