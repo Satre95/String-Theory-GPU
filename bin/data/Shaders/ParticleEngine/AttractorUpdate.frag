@@ -32,7 +32,7 @@ void main() {
     //Calc new position of attractor.
     position.x += cos(angle) * speed;
     position.y += sin(angle) * speed;
-    position.z += sin(angle) * cos(angle) * speed;
+    position.z += sin(angle) * cos(angle) * speed * 2.0f;
     
     //Out of bounds check.
     bool outOfBoundsX = position.x > screenWidth || position.x < 0;

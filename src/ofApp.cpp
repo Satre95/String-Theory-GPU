@@ -5,7 +5,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFrameRate(60);
-    screenDepth = ofGetHeight() / 2;
+    screenDepth = ofGetWidth();
     agentsTexSize = (int)sqrt(numberOfParticles);
     attractorsTexSize = (int)sqrt(numberOfAttractors);
     emittersTexSize = (int)sqrt(numberOfEmitters);
@@ -47,22 +47,24 @@ void ofApp::setup(){
     gui->onSliderEvent(this, &ofApp::noiseChanged);
     
     //setup the camera
-    camera.setDistance(200);
+    camera.setDistance(400);
     camera.enableMouseInput();
     
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    updateEmitters();
+//    updateEmitters();
     updateAttractors();
-    updateAgents();
+//    updateAgents();
     
     framerateLabel->setLabel("Framerate: " + ofToString(ofGetFrameRate()));
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+    
     ofBackground(0, 0, 0);
     camera.begin();
         ofTranslate(-ofGetWidth() / 2, -ofGetHeight() / 2);
