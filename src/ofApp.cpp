@@ -291,7 +291,7 @@ void ofApp::initEmitterData( int emitterTexSize) {
             //Use the height as a depth value as well.
             ofVec3f randomPos(ofRandom(ofGetWidth()), ofRandom(ofGetHeight()), ofRandom(screenDepth));
             
-            float randomSpeed = ofRandom(emitterTexSize);
+            float randomSpeed = ofRandom(maxEmitterSpeed);
             emittersPosAndSpeed[index] = ofVec4f(randomPos.x, randomPos.y, randomPos.z, randomSpeed);
             
             
