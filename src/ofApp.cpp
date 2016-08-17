@@ -54,8 +54,8 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-//    updateEmitters();
-    updateAttractors();
+    updateEmitters();
+//    updateAttractors();
 //    updateAgents();
     
     framerateLabel->setLabel("Framerate: " + ofToString(ofGetFrameRate()));
@@ -68,7 +68,8 @@ void ofApp::draw(){
     ofBackground(0, 0, 0);
     camera.begin();
         ofTranslate(-ofGetWidth() / 2, -ofGetHeight() / 2);
-        drawAttractorDebugData();
+//        drawAttractorDebugData();
+        drawEmitterDebugData();
     camera.end();
     
     gui->draw();
@@ -93,19 +94,22 @@ void ofApp::updateEmitters() {
     //Disable blending so that data is written as is to FBO
     ofEnableBlendMode( OF_BLENDMODE_DISABLED );
     
-    emittersPingPongBuffer.dst->begin();
-        emittersPingPongBuffer.dst->activateAllDrawBuffers();
+    ofFbo * src = emittersPingPongBuffer.src;
+    ofFbo * dst = emittersPingPongBuffer.dst;
+    
+    dst->begin();
+        dst->activateAllDrawBuffers();
         
         emittersUpdateShader.begin();
         
-            emittersUpdateShader.setUniformTexture("emittersPos", emittersPingPongBuffer.src->getTexture(0), 0);
+            emittersUpdateShader.setUniformTexture("emitterData", src->getTexture(0), 0);
             updateCommonNoiseParams(emittersUpdateShader);
     
-            emittersPingPongBuffer.src->draw(0,0);
+            src->draw(0,0);
     
         emittersUpdateShader.end();
     
-    emittersPingPongBuffer.dst->end();
+    dst->end();
     
     emittersPingPongBuffer.swap();
 }
@@ -276,7 +280,34 @@ void ofApp::initAttractorData( int attractorsTexSize) {
 
 //--------------------------------------------------------------
 void ofApp::initEmitterData( int emitterTexSize) {
+    //Init the particle positions and age.
+    vector<ofVec4f> emittersPosAndSpeed(numberOfEmitters);
     
+    emitterPoints.setMode(OF_PRIMITIVE_POINTS);
+    
+    int index = 0;
+    for (int y = 0; y < emitterTexSize; y++) {
+        for (int x = 0; x < emitterTexSize ; x++) {
+            //Use the height as a depth value as well.
+            ofVec3f randomPos(ofRandom(ofGetWidth()), ofRandom(ofGetHeight()), ofRandom(screenDepth));
+            
+            float randomSpeed = ofRandom(emitterTexSize);
+            emittersPosAndSpeed[index] = ofVec4f(randomPos.x, randomPos.y, randomPos.z, randomSpeed);
+            
+            
+            ofVec2f texCoord;
+            texCoord.x = ofMap( x + 0.5f,	0, emitterTexSize,	0.0f, 1.0f ); // the original source has a  '+ 0.5' in it, to get the ceil?
+            texCoord.y = ofMap( y + 0.5f,	0, emitterTexSize,	0.0f, 1.0f );
+            emitterPoints.addTexCoord(texCoord);
+            emitterPoints.addVertex(randomPos);
+            
+            index++;
+        }
+        
+    }
+    
+    //upload source data to ping-pong buffer source.
+    emittersPingPongBuffer.src->getTexture(0).loadData((float *)&emittersPosAndSpeed[0].x, emitterTexSize, emitterTexSize, GL_RGBA);
 }
 
 //--------------------------------------------------------------
@@ -305,6 +336,20 @@ void ofApp::drawAttractorDebugData() {
     attractorPoints.draw();
     
     attractorsDrawShader.end();
+}
+
+void ofApp::drawEmitterDebugData() {
+    emittersDrawShader.begin();
+    emittersDrawShader.setUniform1i("screenWidth", ofGetWidth());
+    emittersDrawShader.setUniform1i("screenHeight", ofGetHeight());
+    emittersDrawShader.setUniform1i("screenDepth", screenDepth);
+    
+    emittersDrawShader.setUniformTexture("tex0", emittersPingPongBuffer.src->getTexture(), 0);
+    emittersDrawShader.setUniform1f("maxSpeed", maxEmitterSpeed);
+    
+    emitterPoints.draw();
+    
+    emittersDrawShader.end();
 }
 
 void ofApp::noiseChanged( ofxDatGuiSliderEvent e) {

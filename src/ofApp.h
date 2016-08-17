@@ -37,12 +37,13 @@ public:
     
     //should be square number.
     int numberOfParticles = 10000;
-    int numberOfAttractors = 800000;
-    int numberOfEmitters = 100;
+    int numberOfAttractors = 100;
+    int numberOfEmitters = 800000;
     int agentsTexSize, attractorsTexSize, emittersTexSize;
     
     int maxParticleAge = 50;
     float maxAttractorSpeed = 2.7f;
+    float maxEmitterSpeed = 2.7f;
     int screenDepth;
     
     void noiseChanged(ofxDatGuiSliderEvent slider);
@@ -63,4 +64,5 @@ private:
     void updateCommonNoiseParams(ofShader &);
     
     void drawAttractorDebugData();
+    void drawEmitterDebugData();
 };
