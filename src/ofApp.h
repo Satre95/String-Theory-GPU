@@ -14,6 +14,7 @@ public:
 
     void keyPressed(int key);
     void keyReleased(int key);
+    void windowResized(int w, int h);
     
     ofxDatGui * gui;
     ofxDatGuiSlider * noiseStrengthSlider;
@@ -36,9 +37,9 @@ public:
     float noiseScale, noiseStrength;
     
     //should be square number.
-    int numberOfParticles = 10000;
-    int numberOfAttractors = 100;
-    int numberOfEmitters = 800000;
+    int numberOfParticles = 10;
+    int numberOfAttractors = 800000;
+    int numberOfEmitters = 100;
     int agentsTexSize, attractorsTexSize, emittersTexSize;
     
     int maxParticleAge = 50;

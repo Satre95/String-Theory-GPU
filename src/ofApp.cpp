@@ -359,3 +359,7 @@ void ofApp::noiseChanged( ofxDatGuiSliderEvent e) {
         noiseScale = e.value;
     }
 }
+
+void ofApp::windowResized(int w, int h) {
+    screenDepth = h;
+}
