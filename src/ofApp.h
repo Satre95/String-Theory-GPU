@@ -38,8 +38,8 @@ public:
     
     //should be square number.
     int numberOfParticles = 10;
-    int numberOfAttractors = 800000;
-    int numberOfEmitters = 100;
+    int numberOfAttractors = 10;
+    int numberOfEmitters = 500000;
     int agentsTexSize, attractorsTexSize, emittersTexSize;
     
     int maxParticleAge = 50;

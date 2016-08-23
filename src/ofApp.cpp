@@ -6,6 +6,7 @@
 void ofApp::setup(){
     ofSetFrameRate(60);
     screenDepth = ofGetWidth();
+    
     agentsTexSize = (int)sqrt(numberOfParticles);
     attractorsTexSize = (int)sqrt(numberOfAttractors);
     emittersTexSize = (int)sqrt(numberOfEmitters);
@@ -18,14 +19,12 @@ void ofApp::setup(){
     setupEmittersPingPongBuffer(emittersTexSize);
     
     //setup the shaders.
-//    agentUpdateShader.load("Shaders/ParticleEngine/ParticleUpdate");
+    agentUpdateShader.load("Shaders/ParticleEngine/ParticleUpdate");
 //    agentsDrawShader.load("Shaders/ParticleEngine/ParticleDraw");
     attractorsUpdateShader.load("Shaders/ParticleEngine/AttractorUpdate");
     attractorsDrawShader.load("Shaders/ParticleEngine/AttractorDraw");
     emittersUpdateShader.load("Shaders/ParticleEngine/EmitterUpdate");
     emittersDrawShader.load("Shaders/ParticleEngine/EmitterDraw");
-    
-
     
     noiseScale = 533.0f;
     noiseStrength = 77.0f;
@@ -213,6 +212,12 @@ void ofApp::setupAgentsPingPongBuffer(int agentsTexSize) {
     settings.maxFilter = GL_NEAREST;
     
     agentsPingPongBuffer.allocate(settings);
+    
+    //Allocate the shaders for agent pos+age and velocity
+    agentsPingPongBuffer.src->createAndAttachTexture(GL_RGBA32F, 0);
+    agentsPingPongBuffer.src->createAndAttachTexture(GL_RGB32F, 1); //Velocity only has 3 components.
+    agentsPingPongBuffer.dst->createAndAttachTexture(GL_RGBA32F, 0);
+    agentsPingPongBuffer.dst->createAndAttachTexture(GL_RGB32F, 1); //Velocity only has 3 components.
 }
 
 //--------------------------------------------------------------
@@ -225,9 +230,9 @@ void ofApp::initParticleData(int agentsTexSize) {
     int index = 0;
     for (int y = 0; y < agentsTexSize; y++) {
         for (int x = 0; x < agentsTexSize ; x++) {
-            ofVec2f randomPos(ofRandom(ofGetWidth()), ofRandom(ofGetHeight()));
+            ofVec3f randomPos(ofRandom(ofGetWidth()), ofRandom(ofGetHeight()), ofRandom(screenDepth));
             float randomAge = ofRandom(maxParticleAge);
-            particlePosAndAge[index] = ofVec4f(randomPos.x, randomPos.y, 0, randomAge);
+            particlePosAndAge[index] = ofVec4f(randomPos.x, randomPos.y, randomPos.z, randomAge);
             
             
             ofVec2f texCoord;
