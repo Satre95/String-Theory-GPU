@@ -1,14 +1,15 @@
 #version 400 core
 
-uniform mat4 MVP;
+#pragma include "Shaders/Utils/ShaderHelpers.glslinc"
 
-in vec4 particle;
+uniform mat4 modelViewProjectionMatrix;
+
+in vec4 position;
 in vec2 texcoord;
 
-out vec2 texCoordVarying;
+out vec2 sampleCoord;
 
-void main(){
-    
-    texCoordVarying = texcoord;
-    gl_Position = MVP * particle;
+void main() {
+    sampleCoord = texcoord;
+    gl_Position = modelViewProjectionMatrix * position;
 }
