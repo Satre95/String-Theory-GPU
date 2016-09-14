@@ -1,4 +1,3 @@
 ofxAutoReloadedShader
 ofxDatGui
 ofxFX
-ofxGpuParticles
