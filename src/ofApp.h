@@ -37,9 +37,9 @@ public:
     float noiseScale, noiseStrength;
     
     //should be square number.
-    int numberOfParticles = 10;
-    int numberOfAttractors = 10;
-    int numberOfEmitters = 500000;
+    int numberOfParticles = 100000;
+    int numberOfAttractors = 1000;
+    int numberOfEmitters = 1000;
     int agentsTexSize, attractorsTexSize, emittersTexSize;
     
     int maxParticleAge = 50;
@@ -66,4 +66,5 @@ private:
     
     void drawAttractorDebugData();
     void drawEmitterDebugData();
+    void drawAgents();
 };

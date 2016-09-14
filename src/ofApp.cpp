@@ -7,6 +7,10 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     screenDepth = ofGetWidth();
     
+    numberOfEmitters = 4;
+    numberOfAttractors = 4;
+    numberOfParticles = 100;
+    
     agentsTexSize = (int)sqrt(numberOfParticles);
     attractorsTexSize = (int)sqrt(numberOfAttractors);
     emittersTexSize = (int)sqrt(numberOfEmitters);
@@ -20,7 +24,7 @@ void ofApp::setup(){
     
     //setup the shaders.
     agentUpdateShader.load("Shaders/ParticleEngine/ParticleUpdate");
-//    agentsDrawShader.load("Shaders/ParticleEngine/ParticleDraw");
+    agentsDrawShader.load("Shaders/ParticleEngine/ParticleDraw");
     attractorsUpdateShader.load("Shaders/ParticleEngine/AttractorUpdate");
     attractorsDrawShader.load("Shaders/ParticleEngine/AttractorDraw");
     emittersUpdateShader.load("Shaders/ParticleEngine/EmitterUpdate");
@@ -54,8 +58,8 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     updateEmitters();
-//    updateAttractors();
-//    updateAgents();
+    updateAttractors();
+    updateAgents();
     
     framerateLabel->setLabel("Framerate: " + ofToString(ofGetFrameRate()));
 }
@@ -67,8 +71,7 @@ void ofApp::draw(){
     ofBackground(0, 0, 0);
     camera.begin();
         ofTranslate(-ofGetWidth() / 2, -ofGetHeight() / 2);
-//        drawAttractorDebugData();
-        drawEmitterDebugData();
+        drawAgents();
     camera.end();
     
     gui->draw();
@@ -149,11 +152,13 @@ void ofApp::updateAgents() {
         
         agentUpdateShader.begin();
         
-            agentUpdateShader.setUniformTexture("agentsPosAndAge", agentsPingPongBuffer.src->getTexture(0), 0);
-            agentUpdateShader.setUniformTexture("emitterPositions", emittersPingPongBuffer.src->getTexture(0), 1);
-            agentUpdateShader.setUniformTexture("attractorPositions", attractorsPingPongBuffer.src->getTexture(0), 2);
+            agentUpdateShader.setUniformTexture("agentPosData", agentsPingPongBuffer.src->getTexture(0), 0);
+            agentUpdateShader.setUniformTexture("agentVelocityData", agentsPingPongBuffer.src->getTexture(1), 1);
+            agentUpdateShader.setUniformTexture("emitterData", emittersPingPongBuffer.src->getTexture(0), 1);
+            agentUpdateShader.setUniformTexture("attractorData", attractorsPingPongBuffer.src->getTexture(0), 2);
             agentUpdateShader.setUniform1f("maxParticleAge", maxParticleAge);
-            
+            updateCommonNoiseParams(agentUpdateShader);
+    
             agentsPingPongBuffer.src->draw(0,0);
     
         agentUpdateShader.end();
@@ -224,6 +229,7 @@ void ofApp::setupAgentsPingPongBuffer(int agentsTexSize) {
 void ofApp::initParticleData(int agentsTexSize) {
     //Init the particle positions and age.
     vector<ofVec4f> particlePosAndAge(numberOfParticles);
+    vector<ofVec3f> particleVelocities(numberOfParticles);
     
     particlePoints.setMode(OF_PRIMITIVE_POINTS);
     
@@ -241,6 +247,8 @@ void ofApp::initParticleData(int agentsTexSize) {
             particlePoints.addTexCoord(texCoord);
             particlePoints.addVertex(randomPos);
             
+            particleVelocities[index] = ofVec3f(ofRandom(2.0f)), ofRandom(2.0f), ofRandom(2.0f);
+            
             index++;
         }
         
@@ -248,6 +256,8 @@ void ofApp::initParticleData(int agentsTexSize) {
     
     //upload source data to ping-pong buffer source.
     agentsPingPongBuffer.src->getTexture(0).loadData((float *)&particlePosAndAge[0].x, agentsTexSize, agentsTexSize, GL_RGBA);
+    agentsPingPongBuffer.dst->getTexture(1).loadData((float *)&particleVelocities[0].x, agentsTexSize, agentsTexSize, GL_RGB);
+
 }
 
 //--------------------------------------------------------------
@@ -356,6 +366,19 @@ void ofApp::drawEmitterDebugData() {
     
     emittersDrawShader.end();
 }
+
+void ofApp::drawAgents() {
+    agentsDrawShader.begin();
+    agentsDrawShader.setUniform1i("screenWidth", ofGetWidth());
+    agentsDrawShader.setUniform1i("screenHeight", ofGetHeight());
+    agentsDrawShader.setUniform1i("screenDepth", screenDepth);
+    agentsDrawShader.setUniformTexture("agentsPosData", agentsPingPongBuffer.src->getTexture(0), 0);
+    
+    particlePoints.draw();
+    
+    emittersDrawShader.end();
+}
+
 
 void ofApp::noiseChanged( ofxDatGuiSliderEvent e) {
     if( e.target == noiseStrengthSlider) {

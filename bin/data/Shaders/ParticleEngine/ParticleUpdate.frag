@@ -3,7 +3,7 @@
 //MARK: Uniforms and In/Out params.
 //The data textures
 //Need to store 2 vectors (6 vals), so two textures are needed.
-uniform sampler2D agentData;
+uniform sampler2D agentPosData;
 uniform sampler2D agentVelocityData;
 uniform sampler2D emitterData;
 uniform sampler2D attractorData;
@@ -35,7 +35,7 @@ void applyNetForce( vec3 netForce, out vec3 agentPos, out vec3 velocity);
 //MARK: Main shader body
 void main(){
     //Get the current position of the particle from the agent tex.
-    vec4 agentPosAndAge = texture(agentData, sampleCoord);
+    vec4 agentPosAndAge = texture(agentPosData, sampleCoord);
     
     vec3 agentPos = agentPosAndAge.xyz;
     float age = agentPosAndAge.w;

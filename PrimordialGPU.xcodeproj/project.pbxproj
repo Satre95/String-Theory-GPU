@@ -321,7 +321,7 @@
 			children = (
 				965DFD771D6277FE0060CB0E /* Attractor */,
 				965DFD781D6278040060CB0E /* Emitter */,
-				965DFD791D62780A0060CB0E /* Particle */,
+				965DFD791D62780A0060CB0E /* Agent */,
 			);
 			path = ParticleEngine;
 			sourceTree = "<group>";
@@ -360,7 +360,7 @@
 			name = Emitter;
 			sourceTree = "<group>";
 		};
-		965DFD791D62780A0060CB0E /* Particle */ = {
+		965DFD791D62780A0060CB0E /* Agent */ = {
 			isa = PBXGroup;
 			children = (
 				965DFD5D1D6272030060CB0E /* ParticleDraw.frag */,
@@ -368,7 +368,7 @@
 				965DFD5F1D6272030060CB0E /* ParticleUpdate.frag */,
 				965DFD601D6272030060CB0E /* ParticleUpdate.vert */,
 			);
-			name = Particle;
+			name = Agent;
 			sourceTree = "<group>";
 		};
 		BB4B014C10F69532006C3DED /* addons */ = {

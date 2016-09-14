@@ -12,7 +12,7 @@ uniform float noiseStrength;
 uniform int screenWidth;
 uniform int screenHeight;
 uniform int screenDepth;
-uniform float maxSpeed;
+uniform float maxParticleAge;
 
 in vec2 sampleCoord;
 
